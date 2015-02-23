@@ -1,0 +1,69 @@
+<html data-ng-app="JukeTubeApp">
+<head>
+    <meta charset="utf-8">
+    <title>Youtube Player</title>
+    <meta name="author" content="Jakub Pas">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="angular.min.js"></script>
+    <script src="bootstrap-ui.js"></script>
+    <script src="angular-local-storage.js"></script>
+    <script src="script.js"></script>
+</head>
+<body data-ng-controller="VideosController">
+<div id="player-wrapper">
+    <div id="player"></div>
+</div>
+<div class="btn btn-small"><a ng-style="{'color': mode=='playlist' && 'black' || 'red'}" ng-click="toggleMode('search')"
+                              href="#/search">Search</a></div>
+<div class="btn"><a ng-style="{'color': mode=='playlist' && 'red' || 'black'}" ng-click="toggleMode('playlist')"
+                    href="#/playlist">Playlists</a></div>
+<ng-view>Loading...</ng-view>
+</body>
+
+<script type="text/ng-template" id="search.html">
+    <form id="search" data-ng-submit="search()">
+        <input id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
+        <input id="submit" type="submit" alt="Search">
+    </form>
+    <div id="results">
+        <div class="video" data-ng-repeat="video in results">
+            <input type="button" ng-click="play(video.id, video.title)" value="Play">
+            <input type="button" ng-click="queue(video.id, video.title)" value="Add"><br>
+            <img class="video-image" data-ng-src="{{ video.thumbnail }}">
+
+            <p class="video-title">{{ video.title }}</p>
+
+            <p class="video-author">{{ video.author }}</p>
+
+            <p class="video-description">{{ video.description }}</p>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="details.html">
+    {{ videoId }} aa
+</script>
+
+<script type="text/ng-template" id="playlist.html">
+    <div id="upcoming">
+        <div class="" vidoe data-ng-repeat="video in upcoming">
+            <input class="btn btn-success" type="button" ng-click="play(video.id, video.title)" value="Play">
+            <input class="btn btn-success" type="button" ng-click="delete('upcoming', video.id)" value="Delete">
+            <a href="#/details/{{video.id}}"><input type="button" value="Info"></a>
+            <img class="video-image" data-ng-src="{{ video.thumbnail }}">
+
+            <p class="video-title">{{ video.title }}</p>
+
+            <p class="video-author">{{ video.author }}</p>
+
+            <p class="video-description">{{ video.description }}</p>
+        </div>
+    </div>
+
+    <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+
+
+</script>
+
+</html>
