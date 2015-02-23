@@ -1,6 +1,7 @@
 Angular JS Youtube Player with playlist support
 ===============================================
 
-==Todo==
+Todo
+----
 
 Get resources from CDN
